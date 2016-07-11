@@ -63,7 +63,6 @@
                 android:layout_height="match_parent"/>
         </LinearLayout>
         <LinearLayout
-            android:clickable="false"
             android:background="#aaa"
             android:id="@+id/bottomToolBar"
             android:layout_alignParentEnd="true"
