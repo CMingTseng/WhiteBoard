@@ -47,7 +47,7 @@ public class WhiteBoardView extends View {
         initCanvas();
     }
 
-    private void initBoard(){
+    public void loadPaint(){
         state = WhiteBoardViewCurrentState.getInstance();
 
         mPaint = new Paint();
@@ -55,6 +55,12 @@ public class WhiteBoardView extends View {
         mPaint.setColor(state.getPenColor());
         mPaint.setStrokeWidth(state.getPenSize());
         mPaint.setStyle(Paint.Style.STROKE);
+        mPaint.setStrokeCap(state.getPenCap());
+    }
+
+    private void initBoard(){
+
+        loadPaint();
 
         mBitmapPaint = new Paint();
         mBitmapPaint.setAntiAlias(true);

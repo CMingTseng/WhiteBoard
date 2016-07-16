@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">WhiteBoard</string>
+    <string name="select_pen_color_title">Select The Pen  Color</string>
+    <string name="ok">OK</string>
+    <string name="select_pen_size_title">Select The Pen Size</string>
+</resources>

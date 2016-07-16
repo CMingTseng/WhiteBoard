@@ -1,6 +1,7 @@
 package com.shutup.whiteboard;
 
 import android.graphics.Color;
+import android.graphics.Paint;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -15,6 +16,8 @@ public class WhiteBoardViewCurrentState {
     private int boardColor = 0;
     private int penColor = 0;
     private int penSize = 10;
+    private Paint.Cap penCap ;
+
     private boolean isShow = true;
     private List<PathSegment> savePaths = new ArrayList<>();
     private List<PathSegment> deletePaths = new ArrayList<>();
@@ -37,7 +40,6 @@ public class WhiteBoardViewCurrentState {
     }
 
 
-
     public boolean isShow() {
         return isShow;
     }
@@ -46,6 +48,13 @@ public class WhiteBoardViewCurrentState {
         isShow = show;
     }
 
+    public Paint.Cap getPenCap() {
+        return penCap;
+    }
+
+    public void setPenCap(Paint.Cap penCap) {
+        this.penCap = penCap;
+    }
 
     public int getPenSize() {
         return penSize;
@@ -78,8 +87,12 @@ public class WhiteBoardViewCurrentState {
         return instance;
     }
 
+
+
     private WhiteBoardViewCurrentState() {
         boardColor =  Color.WHITE;
         penColor = Color.BLACK;
+        penSize = 10;
+        penCap = Paint.Cap.ROUND;
     }
 }
