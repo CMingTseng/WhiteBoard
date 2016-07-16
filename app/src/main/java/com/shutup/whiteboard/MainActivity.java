@@ -1,6 +1,7 @@
 package com.shutup.whiteboard;
 
 import android.content.DialogInterface;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.util.DisplayMetrics;
@@ -24,6 +25,7 @@ public class MainActivity extends BaseActivity {
     private float screenH = 0;
     private WhiteBoardViewCurrentState mState = null;
     private SeekBar mPenSizeSelect = null;
+    private int tempPenSize = 0;
 
     @BindView(R.id.whiteboard)
     WhiteBoardView mWhiteBoardView;
@@ -92,17 +94,15 @@ public class MainActivity extends BaseActivity {
     }
 
     private void handlePenSize() {
-        AlertDialog.Builder alertDialog = new AlertDialog.Builder(MainActivity.this);
-        View view = View.inflate(MainActivity.this, R.layout.pen_size_select_dialog, null);
-
+        AlertDialog.Builder alertDialog = new AlertDialog.Builder(this);
+        View view = View.inflate(this, R.layout.pen_size_select_dialog, null);
         mPenSizeSelect = (SeekBar) view.findViewById(R.id.penSizeSelect);
         mPenSizeSelect.setProgress(mState.getPenSize());
+        tempPenSize = mState.getPenSize();
         mPenSizeSelect.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-                if (fromUser){
-
-                }
+                
             }
 
             @Override
@@ -112,7 +112,7 @@ public class MainActivity extends BaseActivity {
 
             @Override
             public void onStopTrackingTouch(SeekBar seekBar) {
-                mState.setPenSize(seekBar.getProgress());
+                tempPenSize = seekBar.getProgress();
             }
         });
         alertDialog.setView(view);
@@ -120,25 +120,31 @@ public class MainActivity extends BaseActivity {
         alertDialog.setPositiveButton(getString(R.string.ok),new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
+                mState.setPenSize(tempPenSize);
                 mWhiteBoardView.loadPaint();
+            }
+        });
+        alertDialog.setNegativeButton(getString(R.string.cancel), new DialogInterface.OnClickListener(){
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
             }
         });
         alertDialog.show();
     }
 
     private void handlePenColor() {
-        int[] colors = new int[19];
-        int[] colors_id = new int[]{
-                R.color.red, R.color.pink, R.color.purple, R.color.deep_purple, R.color.indigo,
-                R.color.blue, R.color.light_blue, R.color.cyan, R.color.teal, R.color.green,
-                R.color.light_green, R.color.lime, R.color.yellow, R.color.amber, R.color.orange,
-                R.color.deep_orange, R.color.brown, R.color.grey, R.color.blue_grey,
-        };
+        ColorPickerDialog colorPickerDialog = new ColorPickerDialog(this, mState.getPenColor(), new ColorPickerDialog.OnColorSelectedListener() {
 
-        for (int i = 0; i < colors_id.length; i++) {
-            colors[i] = getResources().getColor(colors_id[i]);
-        }
+            @Override
+            public void onColorSelected(int color) {
+                // do action
+                mState.setPenColor(color);
+                mWhiteBoardView.loadPaint();
+            }
 
+        });
+        colorPickerDialog.setTitle(R.string.select_pen_color_title);
+        colorPickerDialog.show();
     }
 
     private void handleToolBarShowHide() {
