@@ -4,4 +4,5 @@
     <string name="select_pen_color_title">Select The Pen  Color</string>
     <string name="ok">OK</string>
     <string name="select_pen_size_title">Select The Pen Size</string>
+    <string name="cancel">Cancel</string>
 </resources>
